@@ -1,6 +1,36 @@
+ 
+ .top-wrapper{
+     margin: 10px;
+     height: auto;
+ }
 .wrapper{ 
-    margin: 70px auto 0 auto;
-    max-width: 1200px;
-    min-width: 1100px;
-    height: 700px;
+    height: 90%;
+    position: relative;
+    flex-grow: 1;
+}
+
+.wrapper-scroller{
+    user-select: none;
+    white-space: nowrap; 
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    position: absolute;
+    margin:auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+.panel-container{
+    text-align: left;
+    width: 450px; 
+    margin:10px;
+    height: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
 }

@@ -22,7 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -30,7 +30,6 @@
             "styles": [
               "src/styles.scss",
               "node_modules/primeflex/primeflex.scss"
-
             ],
             "scripts": []
           },
@@ -47,7 +46,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -126,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "leagueCalc"
+    }
+  },
+  "defaultProject": "leagueCalc",
+  "cli": {
+    "analytics": "84f5a8e8-7bbe-4eaf-a0c1-908ecf1fbcd9"
+  }
 }

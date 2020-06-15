@@ -1,4 +1,43 @@
 @import '~primeicons/primeicons.css';
-@import '~primeng/resources/themes/nova-light/theme.css';
+@import '~primeng/resources/themes/luna-blue/theme.css';
 @import '~primeng/resources/primeng.min.css';
 @import '~primeflex/primeflex.scss';
+
+body{
+    font-family: Roboto !important;
+    font-size: 18px !important;
+    line-height: 1.05em !important;
+    font-weight: 600 !important;
+    background-color: #313131;
+    color: #e7e7e7; 
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+}
+html{
+  height: 100%;
+}
+
+.center{
+    text-align: center;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #505050;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

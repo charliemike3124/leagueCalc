@@ -1,0 +1,191 @@
+<div class="wrapper" >
+    <div class="info-panel">
+        <!--SELECT CHAMPION DROPDOWN-->
+        <div class="select-champ">
+            <ng-container *ngIf="championsOptions.length>0">
+                <p-dropdown [options]="championsOptions" [(ngModel)]="selectedChampion" filter="true" [virtualScroll]="true" [itemSize]="30" placeholder="Choose Champion" (onChange)="onChampSelect(selectedChampion)">
+                    <ng-template let-item pTemplate="selectedItem">
+                        <img src="{{getChampUrl(item.value.image.full)}}" style="width:25px;vertical-align:middle" />
+                        <span style="vertical-align:middle; margin-left: .5em">{{item.value.name}}</span>
+                    </ng-template>
+                    <ng-template let-item pTemplate="item">
+                        <div class="ui-helper-clearfix" style="position: relative;height: 31px;">
+                            <img  src="{{getChampUrl(item.value.image.full)}}" style="width:30px;position:absolute;top:1px;left:5px"/>
+                            <div style="font-size:14px;float:right;margin-top:4px">{{item.value.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </ng-container>
+        </div>
+        <!--CHAMPION INFO-->
+    <ng-container *ngIf="selectedChampion">
+        <div class="p-grid p-justify-center">
+                <div class="p-col-3 center">
+                    <img src="{{getChampUrl(selectedChampion.image.full)}}" width="80px"/>
+                </div>
+                <div class="p-col-4"> 
+                    <p >
+                        {{selectedChampion.name}}, {{selectedChampion.title}}
+                    </p>
+                </div>
+                <div class="p-col-5">
+                    <div style="float:left">
+                        Lv. {{champLevel + 1}} &nbsp;
+                    </div>
+                        <div style="float:right">
+                            <button class="icon-button" (click)="increaseLevel(false)"><i class="fas fa-minus"></i></button>&nbsp;
+                            <button class="icon-button"(click)="increaseLevel(true)" ><i class="fas fa-plus" ></i></button>
+                        </div>
+                    <br><br><br>
+                    <div style="float:left">
+                        <i class="far fa-clock" pTooltip="In-Game Time" tooltipPosition="top"></i> {{gameTime}} mins
+                    </div>
+                    <div style="float:right">
+                        <button class="icon-button" (click)="increaseGameTime(false)"><i class="fas fa-minus"></i></button>&nbsp;
+                        <button class="icon-button"(click)="increaseGameTime(true)" ><i class="fas fa-plus" ></i></button>
+                    </div>                    
+                </div>
+        </div>
+        <!--STATS-->
+        <div class="p-grid">
+            <div class="p-col-12">
+                <p class="stat-title">-Defensive Stats-</p>
+                <div class="p-grid">
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/health_icon.png"/> &nbsp;
+                        <span class="stat-text">Hp: </span>
+                        <span class="stat-text-number">{{calcStat(selectedChampion.stats.hp,selectedChampion.stats.hpperlevel ,BonusHP,0,'hp')}} (+{{selectedChampion.stats.hpperlevel}})</span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/health_regen_icon.png"/> &nbsp;
+                        <span class="stat-text">Hp/5:</span>
+                         <span class="stat-text-number">{{calcStat(selectedChampion.stats.hpregen,selectedChampion.stats.hpregenperlevel ,BonusHPregen,1,'hpregen')}} (+{{selectedChampion.stats.hpregenperlevel}})</span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Mana_icon.png"/> &nbsp;
+                        <span class="stat-text">Mp:</span>
+                         <span class="stat-text-number">{{calcStat(selectedChampion.stats.mp,selectedChampion.stats.mpperlevel ,BonusMP,0,'mp')}} (+{{selectedChampion.stats.mpperlevel}})</span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Mana_regeneration_icon.png"/> &nbsp;
+                        <span class="stat-text">Mp/5: </span>
+                        <span class="stat-text-number">{{calcStat(selectedChampion.stats.mpregen,selectedChampion.stats.mpregenperlevel ,BonusMPregen,1,'mpregen')}} (+{{selectedChampion.stats.mpregenperlevel}})</span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Armor_icon.png"/> &nbsp;
+                        <span class="stat-text">Armor: </span>
+                        <span class="stat-text-number">{{calcStat(selectedChampion.stats.armor,selectedChampion.stats.armorperlevel ,BonusArmor,0,'armor')}} (+{{selectedChampion.stats.armorperlevel}})</span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Magic_resistance_icon.png"/> &nbsp;
+                        <span class="stat-text">Mr:</span>
+                        <span class="stat-text-number">{{calcStat(selectedChampion.stats.spellblock,selectedChampion.stats.spellblockperlevel ,BonusMr,0,'mr')}} (+{{selectedChampion.stats.spellblockperlevel}})</span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="p-col-12">
+                <p class="stat-title">-Offensive Stats-</p>
+                <div class="p-grid">
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Attack_damage_icon.png"/> &nbsp;
+                        <span class="stat-text">Ad: </span>
+                        <span class="stat-text-number">{{calcStat(selectedChampion.stats.attackdamage,selectedChampion.stats.attackdamageperlevel ,BonusAD,1,'ad')}} (+{{selectedChampion.stats.attackdamageperlevel}})</span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Attack_speed_icon.png"/> &nbsp;
+                        <span class="stat-text">As: </span>
+                        <span class="stat-text-number">{{calcAS(selectedChampion.stats.attackspeed,selectedChampion.stats.attackspeedperlevel ,BonusAS,2,'as')}} (+{{round((selectedChampion.stats.attackspeedperlevel)*1000)/1000}}%)</span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Critical_strike_damage_icon.png"/> &nbsp;
+                        <span class="stat-text">Crit: <span class="stat-text-number">{{calcStat(selectedChampion.stats.crit,selectedChampion.stats.critperlevel ,Crit,1,'crit')}}%</span></span>
+                    </div> 
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Ability_power_icon.png"/> &nbsp;
+                        <span class="stat-text">Ap: <span class="stat-text-number">{{calcStat(0,0,BonusAP,0,'ap')}}</span></span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Life_steal_icon.png"/> &nbsp;
+                        <span class="stat-text">Life Steal: <span class="stat-text-number">{{calcStat(0,0,lifeSteal,0,'ls')}}%</span></span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Spell_vamp_icon.png"/> &nbsp;
+                        <span class="stat-text">Spell Vamp: <span class="stat-text-number">{{calcStat(0,0,spellVamp,0,'sv')}}%</span></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="p-col-12">
+                <p class="stat-title">-Misc-</p>
+                <div class="p-grid"> 
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Movement_speed_icon.png"/> &nbsp;
+                        <span class="stat-text">Ms: <span class="stat-text-number">{{calcStat(selectedChampion.stats.movespeed,0 ,BonusMS,0,'ms')}}</span></span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Range_icon.png"/> &nbsp;
+                        <span class="stat-text">Range: <span class="stat-text-number">{{calcStat(selectedChampion.stats.attackrange,0 ,BonusRange,0,'range')}}</span></span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Cooldown_reduction_icon.png"/> &nbsp;
+                        <span class="stat-text">CDR: <span class="stat-text-number">{{calcStat(0,0,CDR,0,'cdr')}}%</span></span>
+                    </div>
+                    <div class="p-col-6 stat-row">
+                        <img src="assets/Tenacity_icon.png"/> &nbsp;
+                        <span class="stat-text">Tenacity: <span class="stat-text-number">{{calcStat(0,0,tenacity,0,'tenacity')}}%</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--ITEMS PANEL-->
+        <div class="p-grid">
+            <div class="p-col-12">
+                <p class="stat-title">
+                    Choose Items: 
+                </p>
+            </div>
+            <div class="p-col-12">
+                <div class="p-grid">
+                    <div class="p-col">
+                        <div class="item-holder"> 
+                            <div  class="item-box" *ngFor="let i of [0,1,2,3,4,5]" >
+
+                                <div (click)="toggleOverlayPanel($event,op)"  style="position: relative;">
+                                    <img #itemBox class="item-box-img"  />
+                                    <div pTooltip="{{getItemTooltip(i)}}" tooltipPosition="top" [escape]='false' *ngIf="equippedItems[i]!= undefined" class="itembox-tooltip" (contextmenu)="unequipItem(itemBox,i)"></div>
+                                </div>
+                                <p-overlayPanel #op [dismissable]="true" >
+                                    <ng-template pTemplate>
+                                        <div class="item-container">
+                                            <div class="p-grid">
+                                                <div class="p-col-12"><input type="text" pInputText  [(ngModel)]="searchedItem"/></div>
+                                                <div class="p-col-2" *ngFor="let item of SRitems"> 
+                                                    <img src="{{getItemUrl(item.image.full)}}" class="item-img" width="40px"  pTooltip="{{getItemTooltip(item)}}" tooltipPosition="top" [escape]='false' 
+                                                         (mousedown)="equipItem(item,itemBox,op,i)"   />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-overlayPanel>
+                            </div>
+                        </div>    
+                    </div> 
+                    <div class="p-col">
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                <img src="assets/items.png" pTooltip="Combined gold cost of the items."/> Cost: {{goldCost}}                         
+                            </div>
+                            <div class="p-col-12">
+                               <img src="assets/minion.png" pTooltip="Aproximate amount of cs needed to fulfill the gold cost (Takes gold per minute into account)."/> Cs: {{csNeeded}}            
+                            </div>
+                        </div>
+                    </div>  
+                </div>         
+            </div>
+        </div>
+        <div class="runes-panel">
+            <!--RUNES-->
+        </div>
+    </ng-container>
+</div>

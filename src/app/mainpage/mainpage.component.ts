@@ -12,6 +12,7 @@ export class MainpageComponent implements OnInit {
 
   public items: any = [];
   public champions: any = [];
+  public champPanels: any = [1];
 
   constructor(private riot: RiotapiService){
 
@@ -45,4 +46,10 @@ export class MainpageComponent implements OnInit {
     return this.riot.getItemImageUrl(itemUrl);
   }
 
+  addPanel(){
+    this.champPanels.push(1);
+  }
+  removePanel(){
+    this.champPanels.pop();
+  }
 }

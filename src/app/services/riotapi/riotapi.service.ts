@@ -11,8 +11,8 @@ export class RiotapiService {
   public headers: any = { 'Authorization': 'RGAPI-cff4585a-ac90-4996-bb09-453d71dfe073', 'My-Custom-Header': 'foobar' }
 
   private versionsUrl = "https://ddragon.leagueoflegends.com/api/versions.json";
-  private itemsUrl = "http://ddragon.leagueoflegends.com/cdn/10.11.1/data/en_US/item.json"; 
-  private championsUrl = "http://ddragon.leagueoflegends.com/cdn/10.11.1/data/en_US/champion.json"  
+  private itemsUrl = "https://ddragon.leagueoflegends.com/cdn/10.11.1/data/en_US/item.json"; 
+  private championsUrl = "https://ddragon.leagueoflegends.com/cdn/10.11.1/data/en_US/champion.json"  
 
   private patch: string;
 
@@ -80,20 +80,56 @@ export class RiotapiService {
     });
   }
 
+  public getChampionSpecific(champName): any{
+    let url = 'https://ddragon.leagueoflegends.com/cdn/10.11.1/data/en_US/champion/'+ champName +'.json'
+
+    return new Promise((resolve, reject)=>{
+      let champion: any = [];
+      this.http.get(url).subscribe((data:any) => {            
+        Object.keys(data.data).map((index)=>{
+            let element = data.data[index];
+            champion.push(element);
+        });    
+        if(champion != undefined){
+          resolve(champion);
+        }
+        else{
+          reject('failed');
+        }
+    })
+
+    });
+    return url;
+
+  }
+
   public getItemImageUrl(itemUrl){
 
-    let url = 'http://ddragon.leagueoflegends.com/cdn/'+this.patch+'/img/item/' + itemUrl
+    let url = 'https://ddragon.leagueoflegends.com/cdn/'+this.patch+'/img/item/' + itemUrl
     
     return url;
   }
 
+  public getChampionImageUrl(champUrl){
 
-  private getVersionedUrlItems(patch){
-    return "http://ddragon.leagueoflegends.com/cdn/" +patch+ "/data/en_US/item.json"
+    
+    let url = 'https://ddragon.leagueoflegends.com/cdn/'+this.patch+'/img/champion/' + champUrl
+    
+    return url;
+  }
+
+  public getChampionLoadingImageUrl(champName){
+    let url = "https://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + champName + "_0.jpg"
+    return url;
+  }
+
+
+  private getVersionedUrlItems(patch){ 
+    return "https://ddragon.leagueoflegends.com/cdn/" +patch+ "/data/en_US/item.json"
   }
 
   private getVersionedUrlChamps(patch){
-    return  "http://ddragon.leagueoflegends.com/cdn/"+ patch +"/data/en_US/champion.json"
+    return  "https://ddragon.leagueoflegends.com/cdn/"+ patch +"/data/en_US/champion.json"
   }
  
  

@@ -1,0 +1,108 @@
+p{
+    width: auto;
+    white-space: normal;
+}
+
+.wrapper{
+    max-width: 900px;
+    max-height: 800px;
+}
+
+.info-panel{
+    background: #494949;
+    border-radius: 2px 2px;
+    -webkit-box-shadow: 0px 0px 4px 1px rgba(150,150,150,0.86);
+    -moz-box-shadow: 0px 0px 4px 1px rgba(150,150,150,0.86);
+    box-shadow: 0px 0px 4px 1px rgba(150,150,150,0.86);
+    width: 100%;
+    float: left;
+    padding: 8px;
+}
+
+ 
+.select-champ{
+    margin-bottom: 15px;
+    animation-duration: 200ms;
+    animation-timing-function: ease-in-out;
+}
+
+.icon-button:hover{
+    transform: scale(1.05);
+    color: #5e5e5e !important;
+}
+
+.stat-title{
+    margin: 0.5em;
+    font-style: italic;
+    color: #979797
+}
+
+.stat-text{
+    font-size: 0.9em;
+}
+
+.stat-text-number{
+    font-weight: 500;
+    position: absolute;
+    right: 8px;
+    bottom: 6px;
+}
+
+.stat-row{
+    padding: 0.5em;
+    position: relative;
+}
+
+.item-holder{
+    float: left;
+    height:150px;
+    width: 225px;
+}
+
+.item-box{
+    float: left;
+    margin: 2.5px;
+    width: 70px;
+    height: 70px;
+    background-color: #adadad;
+    border-radius: 3.5px;
+    animation-duration: 500ms;
+    animation-timing-function: ease-in-out;
+}
+
+.item-box-img{
+    width: 70px;
+    height: 70px;
+    border-radius: 3.5px;
+}
+
+.itembox-tooltip{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top:0;
+}
+
+.item-box:hover{ 
+    background-color: #b9b9b9;
+}
+
+.item-container{
+    height: 300px;
+    width:370px;
+    overflow-x: hidden;
+}
+
+.item-img:hover{ 
+    border: 1px solid #5e5e5e;
+    transform: scale(1.15);
+}
+.item-cost{
+    height: 150px;
+    float:left;
+    width: auto;
+}
+.item-cost-box{
+    margin:2.5px;
+
+}
